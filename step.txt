@@ -1,0 +1,38 @@
+Global setup:
+
+ Set up git
+  git config --global user.name "yiguang hu"
+  git config --global user.email yiguang.hu@gmail.com
+      
+
+Next steps:
+
+  mkdir micropost
+  cd micropost
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:yighu/micropost.git
+  git push -u origin master
+      
+
+Existing Git Repo?
+
+  cd existing_git_repo
+  git remote add origin git@github.com:yighu/micropost.git
+  git push -u origin master
+      
+
+Importing a Subversion Repo?
+
+  Click here
+      
+
+When you're done:
+
+  Continue
+------------------------------
+rails generate scaffold User name:string email:string
+
+
