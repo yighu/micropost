@@ -10,7 +10,7 @@ def create
 	render 'new'
      else
 	 sign_in user
-	 redirect_to user
+	 redirect_back_or user
    end
 end
 def destroy
