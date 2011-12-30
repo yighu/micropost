@@ -1,4 +1,6 @@
 class McropostsController < ApplicationController
+	before_filter :authenticate, :only => [:create, :destroy]
+	before_filter :authorized_user, :only => :destroy
   # GET /mcroposts
   # GET /mcroposts.json
   def index
@@ -40,14 +42,17 @@ class McropostsController < ApplicationController
   # POST /mcroposts
   # POST /mcroposts.json
   def create
-    @mcropost = Mcropost.new(params[:mcropost])
+    @mcropost = current_user.mcroposts.build(params[:mcropost])
 
     respond_to do |format|
       if @mcropost.save
-        format.html { redirect_to @mcropost, :notice => 'Mcropost was successfully created.' }
+	      flash[:success]="microposts created"
+        #format.html { redirect_to @mcropost, :notice => 'Mcropost was successfully created.' }
+        format.html { redirect_to root_path }
         format.json { render :json => @mcropost, :status => :created, :location => @mcropost }
       else
-        format.html { render :action => "new" }
+	      @feed_items=[]
+        format.html { render 'pages/home' }
         format.json { render :json => @mcropost.errors, :status => :unprocessable_entity }
       end
     end
@@ -76,8 +81,16 @@ class McropostsController < ApplicationController
     @mcropost.destroy
 
     respond_to do |format|
-      format.html { redirect_to mcroposts_url }
+      #format.html { redirect_to mcroposts_url }
+      format.html { redirect_back_or root_path}
       format.json { head :ok }
     end
   end
+
+private
+     
+def authorized_user
+   @mcropost = current_user.mcroposts.find_by_id(params[:id])
+     redirect_to root_path if @mcropost.nil?
+end
 end

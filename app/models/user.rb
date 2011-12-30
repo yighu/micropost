@@ -25,11 +25,14 @@ class User < ActiveRecord::Base
 	      user = find_by_id(id)
 	          (user && user.salt == cookie_salt) ? user : nil
 		    end
+  def feed
+	  Mcropost.where("user_id = ?", id)
+  end
 	private 
-	    def encrypt_password
+    def encrypt_password
 		    self.salt=make_salt unless has_password?(password)
 		    self.encrypted_password = encrypt(password)
-	      end
+      end
 
         def encrypt(string)
 		secure_hash("#{salt}--#{string}")
@@ -40,5 +43,5 @@ class User < ActiveRecord::Base
 	def secure_hash(string)
 		Digest::SHA2.hexdigest(string)
 	end
-	has_many :mcroposts
+	has_many :mcroposts, :dependent=>:destroy
 end

@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @mcroposts = @user.mcroposts.paginate(:page => params[:page])
     @title=@user.name
 
     respond_to do |format|
