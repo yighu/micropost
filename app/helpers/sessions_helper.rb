@@ -19,6 +19,7 @@ end
 def redirect_back_or(default)
 	redirect_to(session[:return_to] || default)
 	clear_return_to
+end
 def current_user
 	    @current_user ||= user_from_remember_token
 end
@@ -33,6 +34,7 @@ def destroy
 	sign_out
 	redirect_to root_path
 end
+
 private
 
 def user_from_remember_token
