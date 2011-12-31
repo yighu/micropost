@@ -2,8 +2,13 @@ Micropost::Application.routes.draw do
   get "sessions/new"
 
   resources :mcroposts, :only => [:create, :destroy]
-  resources :users
+  resources :users do 
+	  member do
+		  get :following, :followers
+	  end
+  end
   resources :sessions, :only => [:new, :create, :destroy]
+  resources :relationships, :only => [:create, :destroy]
 
 match '/signin',  :to => 'sessions#new'
 match '/signout', :to => 'sessions#destroy'
